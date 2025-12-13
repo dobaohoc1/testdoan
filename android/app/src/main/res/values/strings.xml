@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">ThucdonAI</string>
+    <string name="title_activity_main">ThucdonAI</string>
+    <string name="package_name">com.thucdonai.app</string>
+    <string name="custom_url_scheme">com.thucdonai.app</string>
+</resources>

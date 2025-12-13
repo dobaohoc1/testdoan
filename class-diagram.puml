@@ -1,0 +1,417 @@
+@startuml ThucdonAI_Class_Diagram
+!theme plain
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam packageStyle rectangle
+
+' ==================== USER MANAGEMENT ====================
+package "Authentication" {
+    class NguoiDung <<Entity>> {
+        -id: UUID {PK}
+        -email: String
+        -matkhau: String
+        -ngaytao: DateTime
+        -lantruycanphat: DateTime
+        __
+        +dangKy(): Boolean
+        +dangNhap(): Boolean
+        +dangXuat(): void
+        +resetMatKhau(): Boolean
+    }
+}
+
+package "UserManagement" {
+    class HoSo <<Entity>> {
+        -id: UUID {PK}
+        -nguoidungid: UUID {FK}
+        -hoten: String
+        -email: String
+        -ngaysinh: Date
+        -gioitinh: String
+        -sodienthoai: String
+        -anhdaidien: String
+        -taoluc: DateTime
+        -capnhatluc: DateTime
+        __
+        +capNhat(data: Object): Boolean
+        +layThongTin(): Object
+        +uploadAvatar(file: File): String
+    }
+    
+    class HoSoSucKhoe <<Entity>> {
+        -id: UUID {PK}
+        -nguoidungid: UUID {FK}
+        -chieucao: Decimal
+        -cannang: Decimal
+        -muctieucalohangngay: Integer
+        -muctieusuckhoe: Array<String>
+        -hanchechedo: Array<String>
+        -diung: Array<String>
+        -mucdohoatdong: String
+        -tinhtrangsuckhoe: Array<String>
+        -taoluc: DateTime
+        -capnhatluc: DateTime
+        __
+        +capNhat(data: Object): Boolean
+        +tinhBMI(): Decimal
+        +tinhTDEE(): Integer
+        +layMucTieuCalo(): Integer
+    }
+}
+
+package "Authorization" {
+    class VaiTroNguoiDung <<Entity>> {
+        -id: UUID {PK}
+        -nguoidungid: UUID {FK}
+        -vaitro: Enum<app_role>
+        -taoluc: DateTime
+        __
+        +kiemTraQuyen(role: String): Boolean
+        +ganVaiTro(role: String): Boolean
+    }
+}
+
+' ==================== RECIPE MANAGEMENT ====================
+package "RecipeManagement" {
+    class CongThuc <<Entity>> {
+        -id: UUID {PK}
+        -ten: String
+        -mota: String
+        -anhdaidien: String
+        -dokho: String
+        -thoigianchuanbi: Integer
+        -thoigiannau: Integer
+        -khauphan: Integer
+        -huongdan: JSON
+        -congkhai: Boolean
+        -nguoitao: UUID {FK}
+        -tongcalo: Decimal
+        -tongdam: Decimal
+        -tongcarb: Decimal
+        -tongchat: Decimal
+        -taoluc: DateTime
+        -capnhatluc: DateTime
+        __
+        +tao(): Boolean
+        +capNhat(data: Object): Boolean
+        +xoa(): Boolean
+        +tinhTongDinhDuong(): Object
+        +phanTichAI(): Object
+        +thayDoiTrangThaiCongKhai(): Boolean
+    }
+    
+    class NguyenLieu <<Entity>> {
+        -id: UUID {PK}
+        -ten: String
+        -calo100g: Decimal
+        -dam100g: Decimal
+        -carb100g: Decimal
+        -chat100g: Decimal
+        -duong100g: Decimal
+        -xo100g: Decimal
+        -natri100g: Decimal
+        -taoluc: DateTime
+        __
+        +tinhDinhDuong(soluong: Decimal, donvi: String): Object
+        +timKiem(keyword: String): Array<NguyenLieu>
+    }
+    
+    class NguyenLieuCongThuc <<Association>> {
+        -id: UUID {PK}
+        -congthucid: UUID {FK}
+        -nguyenlieuid: UUID {FK}
+        -soluong: Decimal
+        -donvi: String
+        __
+        +tinhDinhDuong(): Object
+    }
+}
+
+' ==================== MEAL PLANNING ====================
+package "MealPlanning" {
+    class KeHoachBuaAn <<Entity>> {
+        -id: UUID {PK}
+        -nguoidungid: UUID {FK}
+        -ten: String
+        -mota: String
+        -ngaybatdau: Date
+        -ngayketthuc: Date
+        -muctieucalo: Integer
+        -danghoatdong: Boolean
+        -taoluc: DateTime
+        -capnhatluc: DateTime
+        __
+        +tao(): Boolean
+        +capNhat(data: Object): Boolean
+        +xoa(): Boolean
+        +taoTuDong(params: Object): Boolean
+        +themMonAn(meal: Object): Boolean
+        +xoaMonAn(mealId: UUID): Boolean
+        +layDanhSachTheoNgay(date: Date): Array<MonAnKeHoach>
+    }
+    
+    class MonAnKeHoach <<Entity>> {
+        -id: UUID {PK}
+        -kehoachid: UUID {FK}
+        -congthucid: UUID {FK}
+        -danhmucid: UUID {FK}
+        -ngaydukien: Date
+        -giodukien: Time
+        -khauphan: Decimal
+        -taoluc: DateTime
+        __
+        +tinhDinhDuong(): Object
+        +capNhat(data: Object): Boolean
+    }
+    
+    class DanhMucBuaAn <<Entity>> {
+        -id: UUID {PK}
+        -ten: String
+        -mota: String
+        -thutuhienthi: Integer
+        -taoluc: DateTime
+        __
+        +layDanhSach(): Array<DanhMucBuaAn>
+    }
+}
+
+' ==================== TRACKING ====================
+package "Tracking" {
+    class NhatKyDinhDuong <<Entity>> {
+        -id: UUID {PK}
+        -nguoidungid: UUID {FK}
+        -ngayghinhan: Date
+        -danhmucid: UUID {FK}
+        -congthucid: UUID {FK}
+        -tenthucpham: String
+        -soluong: Decimal
+        -donvi: String
+        -calo: Decimal
+        -dam: Decimal
+        -carb: Decimal
+        -chat: Decimal
+        -ghichu: String
+        -taoluc: DateTime
+        __
+        +ghiNhan(data: Object): Boolean
+        +capNhat(data: Object): Boolean
+        +xoa(): Boolean
+        +layTheoNgay(date: Date): Array<NhatKyDinhDuong>
+        +tinhTongTheoNgay(date: Date): Object
+        +layThongKe(startDate: Date, endDate: Date): Object
+    }
+    
+    class NhatKyCanNang <<Entity>> {
+        -id: UUID {PK}
+        -nguoidungid: UUID {FK}
+        -ngayghinhan: Date
+        -cannang: Decimal
+        -ghichu: String
+        -taoluc: DateTime
+        __
+        +ghiNhan(weight: Decimal, note: String): Boolean
+        +capNhat(data: Object): Boolean
+        +xoa(): Boolean
+        +layLichSu(startDate: Date, endDate: Date): Array<NhatKyCanNang>
+        +tinhTrungBinh(days: Integer): Decimal
+    }
+    
+    class NhatKyNuoc <<Entity>> {
+        -id: UUID {PK}
+        -nguoidungid: UUID {FK}
+        -ngayghinhan: Date
+        -gioghinhan: Time
+        -soluongml: Integer
+        -taoluc: DateTime
+        __
+        +ghiNhan(amount: Integer): Boolean
+        +xoa(): Boolean
+        +layTheoNgay(date: Date): Array<NhatKyNuoc>
+        +tinhTongTheoNgay(date: Date): Integer
+    }
+}
+
+' ==================== SHOPPING ====================
+package "Shopping" {
+    class DanhSachMuaSam <<Entity>> {
+        -id: UUID {PK}
+        -nguoidungid: UUID {FK}
+        -ten: String
+        -taoluc: DateTime
+        -capnhatluc: DateTime
+        __
+        +tao(): Boolean
+        +xoa(): Boolean
+        +themMon(item: Object): Boolean
+        +xoaMon(itemId: UUID): Boolean
+        +dauDauDaMua(itemId: UUID): Boolean
+    }
+    
+    class MonMuaSam <<Entity>> {
+        -id: UUID {PK}
+        -danhsachid: UUID {FK}
+        -tennguyenlieu: String
+        -soluong: Decimal
+        -donvi: String
+        -damua: Boolean
+        -taoluc: DateTime
+        __
+        +capNhat(data: Object): Boolean
+        +danhDauDaMua(): Boolean
+    }
+}
+
+' ==================== SUBSCRIPTION ====================
+package "Subscription" {
+    class GoiDangKy <<Entity>> {
+        -id: UUID {PK}
+        -ten: String
+        -mota: String
+        -giathang: Decimal
+        -gianam: Decimal
+        -tinhnang: JSON
+        -sokehoachtoida: Integer
+        -socongthuctoida: Integer
+        -danghoatdong: Boolean
+        -taoluc: DateTime
+        __
+        +layDanhSach(): Array<GoiDangKy>
+        +layTheoId(id: UUID): GoiDangKy
+    }
+    
+    class GoiDangKyNguoiDung <<Entity>> {
+        -id: UUID {PK}
+        -nguoidungid: UUID {FK}
+        -goidangkyid: UUID {FK}
+        -trangthai: String
+        -batdauky: DateTime
+        -ketthucky: DateTime
+        -stripekhachhangid: String
+        -stripedangkyid: String
+        -taoluc: DateTime
+        -capnhatluc: DateTime
+        __
+        +dangKy(planId: UUID): Boolean
+        +huy(): Boolean
+        +kiemTraHieuLuc(): Boolean
+        +giaHan(): Boolean
+    }
+}
+
+' ==================== AI SERVICES ====================
+package "AIServices" {
+    abstract class AIAdvisor <<Service>> {
+        __
+        +{abstract} tuVan(profile: HoSoSucKhoe): Object
+        +{abstract} phanTich(data: Object): Object
+    }
+    
+    class FoodScanner <<Service>> {
+        __
+        +quetThucPham(image: File): Object
+        +nhanDien(image: File): String
+        +tinhDinhDuong(foodName: String): Object
+        +tuVan(profile: HoSoSucKhoe): Object
+        +phanTich(data: Object): Object
+    }
+    
+    class RecipeAnalyzer <<Service>> {
+        __
+        +phanTichCongThuc(recipe: CongThuc): Object
+        +danhGiaLoiIch(recipe: CongThuc): Object
+        +canhBao(recipe: CongThuc, profile: HoSoSucKhoe): Array<String>
+        +tuVan(profile: HoSoSucKhoe): Object
+        +phanTich(data: Object): Object
+    }
+    
+    class MealPlanGenerator <<Service>> {
+        __
+        +taoKeHoachTuDong(params: Object): KeHoachBuaAn
+        +deXuatMonAn(profile: HoSoSucKhoe, category: String): Array<CongThuc>
+        +toiUuDinhDuong(plan: KeHoachBuaAn): KeHoachBuaAn
+        +tuVan(profile: HoSoSucKhoe): Object
+        +phanTich(data: Object): Object
+    }
+    
+    class NutritionChatbot <<Service>> {
+        __
+        +chat(message: String, context: Object): String
+        +layLichSuHoiThoai(userId: UUID): Array<Object>
+        +tuVan(profile: HoSoSucKhoe): Object
+        +phanTich(data: Object): Object
+    }
+}
+
+' ==================== UTILITIES ====================
+package "Utilities" {
+    class BMICalculator <<Service>> {
+        __
+        +{static} tinhBMI(height: Decimal, weight: Decimal): Decimal
+        +{static} phanLoaiBMI(bmi: Decimal): String
+        +{static} deXuatCanNang(height: Decimal): Object
+    }
+    
+    class TDEECalculator <<Service>> {
+        __
+        +{static} tinhBMR(weight: Decimal, height: Decimal, age: Integer, gender: String): Integer
+        +{static} tinhTDEE(bmr: Integer, activityLevel: String): Integer
+        +{static} deXuatCalo(tdee: Integer, goal: String): Integer
+    }
+    
+    class NutritionCalculator <<Service>> {
+        __
+        +{static} tinhDinhDuong(ingredients: Array<Object>): Object
+        +{static} tinhMacroRatio(calories: Integer, protein: Decimal, carb: Decimal, fat: Decimal): Object
+    }
+}
+
+' ==================== RELATIONSHIPS ====================
+
+' User relationships (Composition)
+NguoiDung *-- "1" HoSo : owns >
+NguoiDung *-- "1" HoSoSucKhoe : owns >
+NguoiDung *-- "1" VaiTroNguoiDung : owns >
+
+' User relationships (Aggregation)
+NguoiDung o-- "0..*" CongThuc : creates >
+NguoiDung o-- "0..*" KeHoachBuaAn : creates >
+NguoiDung o-- "0..*" NhatKyDinhDuong : logs >
+NguoiDung o-- "0..*" NhatKyCanNang : logs >
+NguoiDung o-- "0..*" NhatKyNuoc : logs >
+NguoiDung o-- "0..*" DanhSachMuaSam : creates >
+NguoiDung o-- "0..1" GoiDangKyNguoiDung : subscribes >
+
+' Recipe relationships
+CongThuc "1" *-- "1..*" NguyenLieuCongThuc : contains >
+NguyenLieu "1" o-- "0..*" NguyenLieuCongThuc : used in >
+
+' Meal Plan relationships
+KeHoachBuaAn "1" *-- "0..*" MonAnKeHoach : includes >
+DanhMucBuaAn "1" o-- "0..*" MonAnKeHoach : categorizes >
+CongThuc "1" o-- "0..*" MonAnKeHoach : used in >
+CongThuc "1" o-- "0..*" NhatKyDinhDuong : logged in >
+DanhMucBuaAn "1" o-- "0..*" NhatKyDinhDuong : categorizes >
+
+' Shopping relationships
+DanhSachMuaSam "1" *-- "0..*" MonMuaSam : contains >
+
+' Subscription relationships
+GoiDangKy "1" o-- "0..*" GoiDangKyNguoiDung : offered to >
+
+' AI Services inheritance
+AIAdvisor <|-- FoodScanner
+AIAdvisor <|-- RecipeAnalyzer
+AIAdvisor <|-- MealPlanGenerator
+AIAdvisor <|-- NutritionChatbot
+
+' Dependencies (dashed arrows)
+FoodScanner ..> NguyenLieu : uses
+RecipeAnalyzer ..> CongThuc : analyzes
+RecipeAnalyzer ..> HoSoSucKhoe : considers
+MealPlanGenerator ..> KeHoachBuaAn : generates
+MealPlanGenerator ..> CongThuc : uses
+BMICalculator ..> HoSoSucKhoe : calculates
+TDEECalculator ..> HoSoSucKhoe : calculates
+NutritionCalculator ..> NguyenLieuCongThuc : calculates
+
+@enduml

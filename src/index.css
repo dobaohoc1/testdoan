@@ -1,0 +1,436 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 🌿 Design System - Modern Health & Nutrition App
+   Mobile-First | Fresh & Clean | Tất cả màu HSL */
+
+@layer base {
+  :root {
+    /* Base - Sáng & Tươi mát */
+    --background: 140 30% 98%;
+    --foreground: 140 15% 12%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 140 15% 12%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 140 15% 12%;
+
+    /* Primary - Xanh lá tự nhiên */
+    --primary: 145 63% 42%;
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 145 63% 55%;
+    --primary-light: 145 50% 92%;
+
+    /* Secondary - Cam tươi năng động */
+    --secondary: 32 95% 60%;
+    --secondary-foreground: 0 0% 100%;
+    --secondary-light: 32 100% 95%;
+
+    /* Muted - Xám nhẹ nhàng */
+    --muted: 140 20% 95%;
+    --muted-foreground: 140 10% 50%;
+
+    /* Accent - Tím pastel */
+    --accent: 260 60% 65%;
+    --accent-foreground: 0 0% 100%;
+    --accent-light: 260 60% 96%;
+
+    /* Success - Xanh lá tươi */
+    --success: 145 63% 42%;
+    --success-foreground: 0 0% 100%;
+
+    /* Warning - Vàng chanh */
+    --warning: 48 96% 53%;
+    --warning-foreground: 0 0% 15%;
+
+    /* Destructive - Đỏ san hô */
+    --destructive: 0 72% 58%;
+    --destructive-foreground: 0 0% 100%;
+
+    /* Info - Xanh dương nhạt */
+    --info: 200 95% 55%;
+    --info-foreground: 0 0% 100%;
+
+    --border: 140 20% 88%;
+    --input: 140 25% 96%;
+    --ring: 145 63% 42%;
+
+    /* 🎨 Gradients hiện đại mượt mà */
+    --gradient-primary: linear-gradient(135deg, hsl(145 63% 42%), hsl(160 60% 50%));
+    --gradient-secondary: linear-gradient(135deg, hsl(32 95% 60%), hsl(40 96% 65%));
+    --gradient-hero: linear-gradient(135deg, hsl(145 63% 42% / 0.95), hsl(200 95% 55% / 0.85));
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(140 30% 99%));
+    --gradient-accent: linear-gradient(135deg, hsl(260 60% 65%), hsl(200 95% 55%));
+    --gradient-warm: linear-gradient(135deg, hsl(32 95% 60%), hsl(355 85% 65%));
+    --gradient-cool: linear-gradient(135deg, hsl(200 95% 55%), hsl(145 63% 42%));
+    --gradient-soft: linear-gradient(180deg, hsl(140 30% 99%), hsl(0 0% 100%));
+
+    /* ✨ Shadows tối ưu mobile */
+    --shadow-xs: 0 1px 2px hsl(145 63% 42% / 0.06);
+    --shadow-sm: 0 2px 8px hsl(145 63% 42% / 0.08);
+    --shadow-md: 0 4px 16px hsl(145 63% 42% / 0.1);
+    --shadow-lg: 0 8px 32px hsl(145 63% 42% / 0.14);
+    --shadow-xl: 0 16px 48px hsl(145 63% 42% / 0.18);
+    --shadow-glow: 0 0 32px hsl(145 63% 55% / 0.4);
+    --shadow-colored: 0 8px 32px hsl(145 63% 42% / 0.2);
+    --shadow-float: 0 12px 40px hsl(145 63% 42% / 0.16);
+
+    /* 🫧 Glass Effect */
+    --glass-bg: hsl(0 0% 100% / 0.75);
+    --glass-border: hsl(0 0% 100% / 0.25);
+
+    /* 📐 Radius mobile-friendly */
+    --radius: 1rem;
+    --radius-lg: 1.5rem;
+    --radius-xl: 2rem;
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 140 15% 8%;
+    --foreground: 140 20% 95%;
+
+    --card: 140 15% 10%;
+    --card-foreground: 140 20% 95%;
+
+    --popover: 140 15% 10%;
+    --popover-foreground: 140 20% 95%;
+
+    --primary: 142 76% 45%;
+    --primary-foreground: 140 15% 8%;
+    --primary-glow: 142 76% 55%;
+
+    --secondary: 174 62% 50%;
+    --secondary-foreground: 140 15% 8%;
+
+    --muted: 140 10% 15%;
+    --muted-foreground: 140 15% 65%;
+
+    --accent: 24 95% 58%;
+    --accent-foreground: 140 15% 8%;
+
+    --success: 142 76% 45%;
+    --success-foreground: 140 15% 8%;
+
+    --warning: 45 93% 55%;
+    --warning-foreground: 140 15% 8%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 140 20% 95%;
+
+    --border: 140 15% 20%;
+    --input: 140 15% 18%;
+    --ring: 142 76% 45%;
+
+    /* Dark Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(142 76% 45%), hsl(174 62% 50%));
+    --gradient-hero: linear-gradient(135deg, hsl(142 76% 45% / 0.95), hsl(174 62% 50% / 0.95));
+    --gradient-card: linear-gradient(145deg, hsl(140 15% 12%), hsl(140 15% 10%));
+    --gradient-accent: linear-gradient(135deg, hsl(24 95% 58%), hsl(45 93% 55%));
+    --gradient-success: linear-gradient(135deg, hsl(142 76% 45%), hsl(160 84% 45%));
+
+    --shadow-soft: 0 2px 20px hsl(0 0% 0% / 0.4);
+    --shadow-medium: 0 8px 40px hsl(0 0% 0% / 0.5);
+    --shadow-strong: 0 20px 60px hsl(0 0% 0% / 0.6);
+    --shadow-glow: 0 0 40px hsl(142 76% 50% / 0.4);
+    --shadow-colored: 0 10px 40px hsl(142 76% 45% / 0.3);
+
+    --glass-bg: hsl(140 15% 12% / 0.7);
+    --glass-border: hsl(0 0% 100% / 0.1);
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Plus Jakarta Sans', 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: 16px; /* Base size cho mobile */
+    line-height: 1.6;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold;
+    letter-spacing: -0.03em;
+    line-height: 1.2;
+  }
+
+  h1 { @apply text-3xl sm:text-4xl md:text-5xl; }
+  h2 { @apply text-2xl sm:text-3xl md:text-4xl; }
+  h3 { @apply text-xl sm:text-2xl md:text-3xl; }
+  h4 { @apply text-lg sm:text-xl md:text-2xl; }
+  
+  /* 👆 Touch targets tối thiểu 44x44px cho mobile */
+  button, a, [role="button"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* ✨ Animations mượt mà */
+  .animate-fade-in {
+    animation: fadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .animate-bounce-soft {
+    animation: bounceSoft 2.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  }
+
+  .animate-scale-in {
+    animation: scaleIn 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .animate-float {
+    animation: float 3.5s ease-in-out infinite;
+  }
+
+  .animate-slide-in-right {
+    animation: slideInRight 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .animate-pulse-soft {
+    animation: pulseSoft 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  /* Gradient Classes */
+  .nutrition-gradient {
+    background: var(--gradient-primary);
+  }
+
+  .hero-gradient {
+    background: var(--gradient-hero);
+  }
+
+  .card-gradient {
+    background: var(--gradient-card);
+  }
+
+  .accent-gradient {
+    background: var(--gradient-accent);
+  }
+
+  /* 🎯 Shadow Classes */
+  .shadow-xs { box-shadow: var(--shadow-xs); }
+  .shadow-sm { box-shadow: var(--shadow-sm); }
+  .shadow-nutrition { box-shadow: var(--shadow-md); }
+  .shadow-nutrition-lg { box-shadow: var(--shadow-lg); }
+  .shadow-nutrition-xl { box-shadow: var(--shadow-xl); }
+  .shadow-glow { box-shadow: var(--shadow-glow); }
+  .shadow-colored { box-shadow: var(--shadow-colored); }
+  .shadow-float { box-shadow: var(--shadow-float); }
+
+  /* 🫧 Glass Effect */
+  .glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border: 1px solid var(--glass-border);
+  }
+
+  /* 🎨 Gradient Text */
+  .gradient-text {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .gradient-text-secondary {
+    background: var(--gradient-secondary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* ⚡ Smooth Transitions */
+  .transition-smooth {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .transition-fast {
+    transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* 🚀 Hover Effects tối ưu mobile */
+  .hover-lift {
+    @apply transition-smooth;
+  }
+
+  @media (hover: hover) {
+    .hover-lift:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-float);
+    }
+  }
+
+  .hover-lift:active {
+    transform: translateY(0);
+  }
+
+  @media (hover: hover) {
+    .hover-glow:hover {
+      box-shadow: var(--shadow-glow);
+    }
+  }
+
+  .hover-scale {
+    @apply transition-smooth;
+  }
+
+  @media (hover: hover) {
+    .hover-scale:hover {
+      transform: scale(1.02);
+    }
+  }
+
+  .hover-scale:active {
+    transform: scale(0.98);
+  }
+
+  /* 🎯 Interactive States */
+  .tap-highlight {
+    -webkit-tap-highlight-color: hsl(145 63% 42% / 0.1);
+  }
+
+  .active-scale:active {
+    transform: scale(0.96);
+  }
+}
+
+@keyframes fadeIn {
+  from { 
+    opacity: 0; 
+    transform: translateY(20px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+}
+
+@keyframes slideUp {
+  from { 
+    opacity: 0; 
+    transform: translateY(30px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+}
+
+@keyframes bounceSoft {
+  0%, 100% { 
+    transform: translateY(0); 
+  }
+  50% { 
+    transform: translateY(-10px); 
+  }
+}
+
+@keyframes scaleIn {
+  from { 
+    opacity: 0; 
+    transform: scale(0.95); 
+  }
+  to { 
+    opacity: 1; 
+    transform: scale(1); 
+  }
+}
+
+@keyframes float {
+  0%, 100% { 
+    transform: translateY(0px); 
+  }
+  50% { 
+    transform: translateY(-15px); 
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulseSoft {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
+/* Scrollbar hide utility */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Better mobile touch targets */
+@media (max-width: 768px) {
+  button:not(.h-7):not(.h-8):not(.h-9), 
+  a.inline-flex, 
+  input[type="button"],
+  input[type="submit"] {
+    min-height: 44px;
+  }
+}
+
+/* Mobile card improvements */
+@media (max-width: 640px) {
+  .card {
+    @apply rounded-2xl;
+  }
+}
+
+/* Safe area for mobile bottom nav */
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
